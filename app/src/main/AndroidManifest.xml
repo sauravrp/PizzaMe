@@ -16,6 +16,7 @@
 
         <activity android:name=".views.PizzaMeActivity"
             android:label="@string/title_activity_pizza_me_view"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>

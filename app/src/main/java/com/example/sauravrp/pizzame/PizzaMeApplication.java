@@ -12,7 +12,6 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import di.components.ApplicationComponent;
 import di.components.DaggerApplicationComponent;
-import di.modules.ApplicationModule;
 
 public class PizzaMeApplication extends Application implements HasActivityInjector {
 
@@ -22,10 +21,11 @@ public class PizzaMeApplication extends Application implements HasActivityInject
     @Override
     public void onCreate() {
         super.onCreate();
-        ApplicationComponent component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+        ApplicationComponent component = DaggerApplicationComponent.builder().build();
         component.inject(this);
-
-        Stetho.initializeWithDefaults(this);
+        if(BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
     }
 
     @Override
