@@ -6,6 +6,7 @@ buildscript {
     ext.REACTIVE_X_RX_JAVA= '2.2.0-SNAPSHOT'
     ext.RX_ANDROID = '2.1.0'
     ext.retrofit = '2.4.0'
+    ext.gson = '2.8.5'
     repositories {
         google()
         jcenter()

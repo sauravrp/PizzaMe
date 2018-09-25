@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import di.components.ApplicationComponent;
 import di.components.DaggerApplicationComponent;
 import di.modules.ApplicationModule;
 
@@ -19,7 +20,8 @@ public class PizzaMeApplication extends Application implements HasActivityInject
     @Override
     public void onCreate() {
         super.onCreate();
-        DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+        ApplicationComponent component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+        component.inject(this);
     }
 
     @Override

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".views.PizzaMeView"
+        <activity android:name=".views.PizzaMeActivity"
             android:label="@string/title_activity_pizza_me_view"
             android:theme="@style/AppTheme.NoActionBar">
 

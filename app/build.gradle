@@ -20,6 +20,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
@@ -43,7 +47,10 @@ dependencies {
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit"
-    implementation "com.squareup.retrofit2:converter-jackson:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    //gson
+    implementation "com.google.code.gson:gson:$gson"
 
     // dagger
     implementation "com.google.dagger:dagger:$DAGGER_VERSION"
