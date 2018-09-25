@@ -13,31 +13,26 @@ import android.widget.TextView;
 
 import com.example.sauravrp.pizzame.R;
 import com.example.sauravrp.pizzame.models.Result;
-import com.example.sauravrp.pizzame.network.YahooAPI;
+import com.example.sauravrp.pizzame.viewmodels.PizzaMeViewModel;
 import com.example.sauravrp.pizzame.views.adapters.PizzaPlacesAdapter;
 import com.example.sauravrp.pizzame.views.viewhelpers.EndlessRecyclerViewScrollListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class PizzaMeActivity extends AppCompatActivity {
 
     private final String TAG = "PizzaMeActivity";
 
-    private final static int FETCH_SIZE = 15;
-
-//    @Inject
-//    PizzaMeViewModel pizzaMeViewModel;
-
     @Inject
-    YahooAPI yahooAPI;
+    PizzaMeViewModel pizzaMeViewModel;
 
     @BindView(R.id.list_view)
     RecyclerView placesListView;
@@ -48,9 +43,11 @@ public class PizzaMeActivity extends AppCompatActivity {
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
+    private CompositeDisposable compositeDisposable;
+
     private PizzaPlacesAdapter pizzaPlacesAdapter;
     private ArrayList<Result> placesList = new ArrayList<>();
-    private EndlessRecyclerViewScrollListener mEndlessScrollListener;
+    private EndlessRecyclerViewScrollListener endlessScrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,19 +57,38 @@ public class PizzaMeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         setupRecyclerView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        bind();
+        endlessScrollListener.resetState();
         placesList.clear();
         pizzaPlacesAdapter.notifyDataSetChanged();
         showProgress(true);
         showErrorText(false);
         showPlacesListView(false);
-        getQueryResults(0);
+        pizzaMeViewModel.offsetSelected(0);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unBind();
+    }
+
+    private void bind() {
+        compositeDisposable = new CompositeDisposable();
+        compositeDisposable.add(pizzaMeViewModel.getResults()
+                .subscribe(this::showResults, this::showError));
+    }
+
+    private void unBind() {
+        if(compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 
     private void setupRecyclerView() {
@@ -81,42 +97,34 @@ public class PizzaMeActivity extends AppCompatActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         pizzaPlacesAdapter = new PizzaPlacesAdapter(PizzaMeActivity.this, placesList);
 
-        mEndlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+        endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                getQueryResults(totalItemsCount);
+
+                pizzaMeViewModel.offsetSelected(totalItemsCount);
             }
         };
         placesListView.setLayoutManager(layoutManager);
         placesListView.addItemDecoration(itemDecoration);
-        placesListView.addOnScrollListener(mEndlessScrollListener);
+        placesListView.addOnScrollListener(endlessScrollListener);
         placesListView.setAdapter(pizzaPlacesAdapter);
 
     }
 
-
-    private void getQueryResults(int offset) {
-
-        String query = String.format("select * from local.search(%d,%d) where zip='78759' and query='pizza'", offset, FETCH_SIZE);
-        yahooAPI.getQueryResults(query, "json", true, "")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(error -> {
-                    Log.d(TAG, error.toString());
-                    showProgress(false);
-                    showErrorText(true);
-                    showPlacesListView(false);
-                })
-                .doOnNext(result -> {
-                   placesList.addAll(result.getQueryInfo().getResults().getResults());
-                   pizzaPlacesAdapter.notifyDataSetChanged();
-                    showProgress(false);
-                    showErrorText(false);
-                    showPlacesListView(true);
-                })
-                .subscribe();
+    private void showResults(List<Result> resultList) {
+        placesList.addAll(resultList);
+        pizzaPlacesAdapter.notifyDataSetChanged();
+        showProgress(false);
+        showErrorText(false);
+        showPlacesListView(true);
     }
 
+    private void showError(Throwable error) {
+        Log.d(TAG, error.toString());
+        showProgress(false);
+        showErrorText(true);
+        showPlacesListView(false);
+    }
 
     private void showErrorText(boolean visible) {
         errorText.setVisibility(visible ? View.VISIBLE : View.GONE);
