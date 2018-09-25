@@ -20,6 +20,9 @@ public class Result {
     @SerializedName("Phone")
     private String phone;
 
+    @SerializedName("Distance")
+    private String distance;
+
     public String getId() {
         return id;
     }
@@ -66,5 +69,13 @@ public class Result {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }

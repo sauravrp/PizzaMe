@@ -1,7 +1,5 @@
 package com.example.sauravrp.pizzame.models;
 
-import java.util.ArrayList;
-
 public class QueryInfo {
 
     private int count;
@@ -14,5 +12,13 @@ public class QueryInfo {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public ResultData getResults() {
+        return results;
+    }
+
+    public void setResults(ResultData results) {
+        this.results = results;
     }
 }
