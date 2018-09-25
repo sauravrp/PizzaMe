@@ -1,26 +1,17 @@
 package com.example.sauravrp.pizzame.models;
 
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 
 public class ResultQuery {
 
-    private int count;
-    private ArrayList<Result> results;
+    @SerializedName("query")
+    private QueryInfo queryInfo;
 
-
-    public int getCount() {
-        return count;
+    public QueryInfo getQueryInfo() {
+        return queryInfo;
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public ArrayList<Result> getResults() {
-        return results;
-    }
-
-    public void setResults(ArrayList<Result> results) {
-        this.results = results;
+    public void setQueryInfo(QueryInfo queryInfo) {
+        this.queryInfo = queryInfo;
     }
 }

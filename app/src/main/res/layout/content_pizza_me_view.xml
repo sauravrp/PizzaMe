@@ -8,4 +8,9 @@
     tools:context=".views.PizzaMeActivity"
     tools:showIn="@layout/pizza_me_activity_main">
 
+    <Button
+        android:id="@+id/temp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </android.support.constraint.ConstraintLayout>

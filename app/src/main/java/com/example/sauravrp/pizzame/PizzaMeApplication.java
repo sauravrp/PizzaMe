@@ -3,6 +3,8 @@ package com.example.sauravrp.pizzame;
 import android.app.Activity;
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -22,6 +24,8 @@ public class PizzaMeApplication extends Application implements HasActivityInject
         super.onCreate();
         ApplicationComponent component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
         component.inject(this);
+
+        Stetho.initializeWithDefaults(this);
     }
 
     @Override

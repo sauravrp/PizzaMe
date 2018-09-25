@@ -9,5 +9,8 @@ import retrofit2.http.Query;
 public interface YahooAPI {
 
     @GET("yql")
-    Observable<ResultQuery> getQueryResults(@Query("q") String queryValue);
+    Observable<ResultQuery> getQueryResults(@Query("q") String queryValue,
+                                            @Query("format") String format,
+                                            @Query("diagnostics") boolean diagnostics,
+                                            @Query("callback") String callback);
 }

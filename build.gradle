@@ -7,6 +7,8 @@ buildscript {
     ext.RX_ANDROID = '2.1.0'
     ext.retrofit = '2.4.0'
     ext.gson = '2.8.5'
+    ext.stetho = '1.5.0'
+    ext.butterknife = '8.8.1'
     repositories {
         google()
         jcenter()
