@@ -7,6 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.sauravrp.pizzame.R;
 import com.example.sauravrp.pizzame.models.Result;
@@ -28,6 +31,8 @@ public class PizzaMeActivity extends AppCompatActivity {
 
     private final String TAG = "PizzaMeActivity";
 
+    private final static int FETCH_SIZE = 15;
+
 //    @Inject
 //    PizzaMeViewModel pizzaMeViewModel;
 
@@ -36,6 +41,12 @@ public class PizzaMeActivity extends AppCompatActivity {
 
     @BindView(R.id.list_view)
     RecyclerView placesListView;
+
+    @BindView(R.id.error_text)
+    TextView errorText;
+
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
 
     private PizzaPlacesAdapter pizzaPlacesAdapter;
     private ArrayList<Result> placesList = new ArrayList<>();
@@ -58,6 +69,9 @@ public class PizzaMeActivity extends AppCompatActivity {
         super.onResume();
         placesList.clear();
         pizzaPlacesAdapter.notifyDataSetChanged();
+        showProgress(true);
+        showErrorText(false);
+        showPlacesListView(false);
         getQueryResults(0);
     }
 
@@ -83,18 +97,37 @@ public class PizzaMeActivity extends AppCompatActivity {
 
     private void getQueryResults(int offset) {
 
-
-        yahooAPI.getQueryResults("select * from local.search where zip='78759' and query='pizza'", "json", true, "")
+        String query = String.format("select * from local.search(%d,%d) where zip='78759' and query='pizza'", offset, FETCH_SIZE);
+        yahooAPI.getQueryResults(query, "json", true, "")
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(error -> {
                     Log.d(TAG, error.toString());
+                    showProgress(false);
+                    showErrorText(true);
+                    showPlacesListView(false);
                 })
                 .doOnNext(result -> {
                    placesList.addAll(result.getQueryInfo().getResults().getResults());
                    pizzaPlacesAdapter.notifyDataSetChanged();
+                    showProgress(false);
+                    showErrorText(false);
+                    showPlacesListView(true);
                 })
                 .subscribe();
+    }
+
+
+    private void showErrorText(boolean visible) {
+        errorText.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    private void showProgress(boolean visible) {
+        progressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    private void showPlacesListView(boolean visible) {
+        placesListView.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
 }

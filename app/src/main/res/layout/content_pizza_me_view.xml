@@ -10,8 +10,25 @@
     tools:context=".views.PizzaMeActivity"
     tools:showIn="@layout/pizza_me_activity_main">
 
+    <TextView
+        android:id="@+id/error_text"
+        android:visibility="gone"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="@string/error_fetching_result"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_view"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

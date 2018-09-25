@@ -3,4 +3,5 @@
     <string name="title_activity_pizza_me_view">PizzaMeView</string>
     <string name="address_spec">%s, %s, %s</string>
     <string name="distance">%s mi</string>
+    <string name="error_fetching_result">Oops..Error Fetching results</string>
 </resources>
