@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PizzaMe</string>
+    <string name="title_activity_pizza_me_view">PizzaMeView</string>
+</resources>
