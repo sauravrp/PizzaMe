@@ -1,6 +1,6 @@
 package com.example.sauravrp.pizzame.network;
 
-import com.example.sauravrp.pizzame.models.network.ResultQuery;
+import com.example.sauravrp.pizzame.network.models.ResultQuery;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;

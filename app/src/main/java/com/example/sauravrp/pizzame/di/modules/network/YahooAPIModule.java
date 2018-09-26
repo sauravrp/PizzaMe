@@ -1,4 +1,4 @@
-package di.modules.network;
+package com.example.sauravrp.pizzame.di.modules.network;
 
 import com.example.sauravrp.pizzame.network.YahooAPI;
 

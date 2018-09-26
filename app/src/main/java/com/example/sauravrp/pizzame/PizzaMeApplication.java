@@ -10,8 +10,8 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import di.components.ApplicationComponent;
-import di.components.DaggerApplicationComponent;
+import com.example.sauravrp.pizzame.di.components.ApplicationComponent;
+import com.example.sauravrp.pizzame.di.components.DaggerApplicationComponent;
 
 public class PizzaMeApplication extends Application implements HasActivityInjector {
 

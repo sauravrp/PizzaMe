@@ -1,6 +1,5 @@
-package com.example.sauravrp.pizzame.models.network;
+package com.example.sauravrp.pizzame.network.models;
 
-import com.example.sauravrp.pizzame.models.network.QueryInfo;
 import com.google.gson.annotations.SerializedName;
 
 public class ResultQuery {

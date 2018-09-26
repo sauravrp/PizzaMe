@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.PizzaMeActivity">
+    tools:context=".views.ListingsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,6 +21,6 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/content_pizza_me_view" />
+        layout="@layout/content_main_view" />
 
 </android.support.design.widget.CoordinatorLayout>

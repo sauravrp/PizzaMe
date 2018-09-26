@@ -1,6 +1,6 @@
-package di.modules.views;
+package com.example.sauravrp.pizzame.di.modules.views;
 
-import com.example.sauravrp.pizzame.views.PizzaMeActivity;
+import com.example.sauravrp.pizzame.views.ListingsActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -9,5 +9,5 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
-    abstract PizzaMeActivity bindPizzaMeView();
+    abstract ListingsActivity bindPizzaMeView();
 }

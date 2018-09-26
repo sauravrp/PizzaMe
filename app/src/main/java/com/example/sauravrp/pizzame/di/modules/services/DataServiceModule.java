@@ -1,7 +1,7 @@
-package di.modules.services;
+package com.example.sauravrp.pizzame.di.modules.services;
 
-import com.example.sauravrp.pizzame.datamodels.DataRepo;
-import com.example.sauravrp.pizzame.datamodels.interfaces.IDataModel;
+import com.example.sauravrp.pizzame.repo.DataRepo;
+import com.example.sauravrp.pizzame.repo.interfaces.IDataModel;
 import com.example.sauravrp.pizzame.helpers.interfaces.ISchedulerProvider;
 import com.example.sauravrp.pizzame.network.YahooAPI;
 

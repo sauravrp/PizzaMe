@@ -1,41 +1,42 @@
 package com.example.sauravrp.pizzame.views.adapters;
 
 import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.example.sauravrp.pizzame.BR;
 import com.example.sauravrp.pizzame.R;
-import com.example.sauravrp.pizzame.databinding.ResultDetailsListItemBinding;
-import com.example.sauravrp.pizzame.models.ui.ResultUiModel;
+import com.example.sauravrp.pizzame.views.models.ListingsUiModel;
+import com.example.sauravrp.pizzame.viewmodels.ListingsViewModel;
 
 import java.util.List;
 
-public class PizzaPlacesAdapter extends RecyclerView.Adapter<PizzaPlacesAdapter.ViewHolder> {
+public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.ViewHolder> {
 
-    private List<ResultUiModel> data;
+    private List<ListingsUiModel> data;
+    ListingsViewModel pizzaMeViewModel;
 
-    public PizzaPlacesAdapter(List<ResultUiModel> aData) {
+    public ListingsAdapter(ListingsViewModel dataModel, List<ListingsUiModel> aData) {
+        pizzaMeViewModel = dataModel;
         data = aData;
     }
 
-    public void onResultClicked(ResultUiModel resultUiModel) {
-        Log.d("temp", resultUiModel.toString());
-    }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ResultDetailsListItemBinding itemBinding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
+        ViewDataBinding itemBinding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
                        R.layout.result_details_list_item, parent, false);
+        itemBinding.setVariable(BR.viewModel, pizzaMeViewModel);
         return new ViewHolder(itemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final ResultUiModel result = data.get(position);
+        final ListingsUiModel result = data.get(position);
         holder.bind(result);
     }
 
@@ -47,15 +48,15 @@ public class PizzaPlacesAdapter extends RecyclerView.Adapter<PizzaPlacesAdapter.
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
-       private final ResultDetailsListItemBinding binding;
+       private final ViewDataBinding binding;
 
-        public ViewHolder(ResultDetailsListItemBinding binding) {
+        public ViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(ResultUiModel item) {
-            binding.setResult(item);
+        public void bind(ListingsUiModel item) {
+            binding.setVariable(BR.uiModel, item);
             binding.executePendingBindings();
         }
     }

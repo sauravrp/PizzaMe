@@ -1,4 +1,4 @@
-package di.modules;
+package com.example.sauravrp.pizzame.di.modules;
 
 import com.example.sauravrp.pizzame.helpers.SchedulerProvider;
 import com.example.sauravrp.pizzame.helpers.interfaces.ISchedulerProvider;

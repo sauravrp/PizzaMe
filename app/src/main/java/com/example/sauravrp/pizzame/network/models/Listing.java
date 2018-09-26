@@ -1,8 +1,8 @@
-package com.example.sauravrp.pizzame.models.network;
+package com.example.sauravrp.pizzame.network.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+public class Listing {
     private String id;
 
     @SerializedName("Title")

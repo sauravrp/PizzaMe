@@ -1,4 +1,4 @@
-package com.example.sauravrp.pizzame.models.network;
+package com.example.sauravrp.pizzame.network.models;
 
 public class QueryInfo {
 

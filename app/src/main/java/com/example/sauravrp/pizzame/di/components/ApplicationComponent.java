@@ -1,15 +1,15 @@
-package di.components;
+package com.example.sauravrp.pizzame.di.components;
 
 import com.example.sauravrp.pizzame.PizzaMeApplication;
 
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
-import di.modules.SchedulerModule;
-import di.modules.network.RetrofitModule;
-import di.modules.network.YahooAPIModule;
-import di.modules.services.DataServiceModule;
-import di.modules.views.ActivityBuilderModule;
-import di.modules.views.ViewModelModule;
+import com.example.sauravrp.pizzame.di.modules.SchedulerModule;
+import com.example.sauravrp.pizzame.di.modules.network.RetrofitModule;
+import com.example.sauravrp.pizzame.di.modules.network.YahooAPIModule;
+import com.example.sauravrp.pizzame.di.modules.services.DataServiceModule;
+import com.example.sauravrp.pizzame.di.modules.views.ActivityBuilderModule;
+import com.example.sauravrp.pizzame.di.modules.views.ViewModelModule;
 
 @Component(modules = {AndroidInjectionModule.class,
         ActivityBuilderModule.class,

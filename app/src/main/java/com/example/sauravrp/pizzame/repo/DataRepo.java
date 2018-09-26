@@ -1,8 +1,8 @@
-package com.example.sauravrp.pizzame.datamodels;
+package com.example.sauravrp.pizzame.repo;
 
-import com.example.sauravrp.pizzame.datamodels.interfaces.IDataModel;
+import com.example.sauravrp.pizzame.repo.interfaces.IDataModel;
 import com.example.sauravrp.pizzame.helpers.interfaces.ISchedulerProvider;
-import com.example.sauravrp.pizzame.models.network.Result;
+import com.example.sauravrp.pizzame.network.models.Listing;
 import com.example.sauravrp.pizzame.network.YahooAPI;
 
 import java.util.ArrayList;
@@ -26,18 +26,18 @@ public class DataRepo implements IDataModel {
     }
 
     @Override
-    public Single<List<Result>> getPizzaListings(int offset) {
+    public Single<List<Listing>> getListings(int offset) {
         String query = String.format("select * from local.search(%d,%d) where zip='78759' and query='pizza'", offset, FETCH_SIZE);
         return yahooAPI.getQueryResults(query, "json", true, "")
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .flatMap(resultQuery -> {
-                    ArrayList<Result> results;
+                    ArrayList<Listing> results;
                             if (resultQuery != null
                                     && resultQuery.getQueryInfo() != null
                                     && resultQuery.getQueryInfo().getResults() != null
-                                    && resultQuery.getQueryInfo().getResults().getResults() != null) {
-                                results = resultQuery.getQueryInfo().getResults().getResults();
+                                    && resultQuery.getQueryInfo().getResults().getListings() != null) {
+                                results = resultQuery.getQueryInfo().getResults().getListings();
                             } else {
                                 results = new ArrayList<>();
                             }
