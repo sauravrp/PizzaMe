@@ -1,5 +1,9 @@
 package com.example.sauravrp.pizzame.views;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.sauravrp.pizzame.R;
-import com.example.sauravrp.pizzame.models.Result;
+import com.example.sauravrp.pizzame.models.ui.ResultUiModel;
 import com.example.sauravrp.pizzame.viewmodels.PizzaMeViewModel;
 import com.example.sauravrp.pizzame.views.adapters.PizzaPlacesAdapter;
 import com.example.sauravrp.pizzame.views.viewhelpers.EndlessRecyclerViewScrollListener;
@@ -46,7 +50,7 @@ public class PizzaMeActivity extends AppCompatActivity {
     private CompositeDisposable compositeDisposable;
 
     private PizzaPlacesAdapter pizzaPlacesAdapter;
-    private ArrayList<Result> placesList = new ArrayList<>();
+    private ArrayList<ResultUiModel> placesList = new ArrayList<>();
     private EndlessRecyclerViewScrollListener endlessScrollListener;
 
     @Override
@@ -64,6 +68,7 @@ public class PizzaMeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         bind();
+
         endlessScrollListener.resetState();
         placesList.clear();
         pizzaPlacesAdapter.notifyDataSetChanged();
@@ -92,10 +97,9 @@ public class PizzaMeActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        pizzaPlacesAdapter = new PizzaPlacesAdapter(PizzaMeActivity.this, placesList);
+        pizzaPlacesAdapter = new PizzaPlacesAdapter(placesList);
 
         endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
@@ -111,7 +115,9 @@ public class PizzaMeActivity extends AppCompatActivity {
 
     }
 
-    private void showResults(List<Result> resultList) {
+    private void showResults(List<ResultUiModel> resultList) {
+        if(resultList.size() == 0)
+            return;
         placesList.addAll(resultList);
         pizzaPlacesAdapter.notifyDataSetChanged();
         showProgress(false);

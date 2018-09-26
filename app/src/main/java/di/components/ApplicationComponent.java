@@ -4,6 +4,7 @@ import com.example.sauravrp.pizzame.PizzaMeApplication;
 
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
+import di.modules.SchedulerModule;
 import di.modules.network.RetrofitModule;
 import di.modules.network.YahooAPIModule;
 import di.modules.services.DataServiceModule;
@@ -17,8 +18,10 @@ import di.modules.views.ViewModelModule;
         // data service layer
         DataServiceModule.class,
         // view model
-        ViewModelModule.class})
-public interface ApplicationComponent {
+        ViewModelModule.class,
+        // helper
+        SchedulerModule.class})
+public abstract class ApplicationComponent {
 
-    void inject(PizzaMeApplication app);
+    public abstract void inject(PizzaMeApplication app);
 }

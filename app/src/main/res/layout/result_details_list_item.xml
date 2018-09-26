@@ -1,53 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="result"
+            type="com.example.sauravrp.pizzame.models.ui.ResultUiModel" />
+        <variable
+            name="adapter"
+            type="com.example.sauravrp.pizzame.views.adapters.PizzaPlacesAdapter"/>
+    </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_toLeftOf="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_alignParentLeft="true"
-            tools:text="Pizza Day" />
-
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_alignParentRight="true"
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="2 mi"
-            />
-
-    </RelativeLayout>
-
-
-
-    <TextView
-        android:id="@+id/address"
-        android:layout_marginTop="5dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        tools:text="10225 Research Blvd, Ste 110, Austin TX" />
+        android:layout_margin="10dp"
+        android:onClick="@{() -> adapter.onResultClicked(result)}"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/phone_number"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        tools:text="555-555-5555" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/distance"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="@{result.title}"
+                tools:text="Pizza Day" />
+
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:text="@{@string/distance_in_mi(result.distance)}"
+                tools:text="2 mi" />
+
+        </RelativeLayout>
 
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:text="@{@string/address_spec(result.address, result.city, result.state)}"
+            tools:text="10225 Research Blvd, Ste 110, Austin TX" />
+
+        <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:text="@{result.phone != null ? result.phone : @string/no_number_found}"
+            tools:text="555-555-5555" />
+
+
+    </LinearLayout>
+</layout>

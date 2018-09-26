@@ -1,5 +1,6 @@
-package com.example.sauravrp.pizzame.models;
+package com.example.sauravrp.pizzame.models.network;
 
+import com.example.sauravrp.pizzame.models.network.Result;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

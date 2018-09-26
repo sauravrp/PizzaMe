@@ -1,49 +1,42 @@
 package com.example.sauravrp.pizzame.views.adapters;
 
-import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.sauravrp.pizzame.R;
-import com.example.sauravrp.pizzame.models.Result;
+import com.example.sauravrp.pizzame.databinding.ResultDetailsListItemBinding;
+import com.example.sauravrp.pizzame.models.ui.ResultUiModel;
 
-import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.util.List;
 
 public class PizzaPlacesAdapter extends RecyclerView.Adapter<PizzaPlacesAdapter.ViewHolder> {
 
-    private ArrayList<Result> data;
+    private List<ResultUiModel> data;
 
-    private Context context;
-
-    public PizzaPlacesAdapter(Context ctx, ArrayList<Result> aData) {
-        context = ctx;
+    public PizzaPlacesAdapter(List<ResultUiModel> aData) {
         data = aData;
+    }
+
+    public void onResultClicked(ResultUiModel resultUiModel) {
+        Log.d("temp", resultUiModel.toString());
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result_details_list_item, parent, false);
-
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        ResultDetailsListItemBinding itemBinding = DataBindingUtil.inflate( LayoutInflater.from(parent.getContext()),
+                       R.layout.result_details_list_item, parent, false);
+        return new ViewHolder(itemBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Result result = data.get(position);
-
-        holder.name.setText(result.getTitle());
-        holder.address.setText( String.format(context.getString(R.string.address_spec), result.getAddress(), result.getCity(), result.getState()));
-        holder.distance.setText(String.format(context.getString(R.string.distance), result.getDistance()));
-        holder.phoneNumber.setText(result.getPhone());
+        final ResultUiModel result = data.get(position);
+        holder.bind(result);
     }
 
     @Override
@@ -54,21 +47,16 @@ public class PizzaPlacesAdapter extends RecyclerView.Adapter<PizzaPlacesAdapter.
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.name)
-        TextView name;
+       private final ResultDetailsListItemBinding binding;
 
-        @BindView(R.id.address)
-        TextView address;
+        public ViewHolder(ResultDetailsListItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
 
-        @BindView(R.id.phone_number)
-        TextView phoneNumber;
-
-        @BindView(R.id.distance)
-        TextView distance;
-
-        public ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        public void bind(ResultUiModel item) {
+            binding.setResult(item);
+            binding.executePendingBindings();
         }
     }
 }

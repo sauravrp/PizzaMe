@@ -1,4 +1,4 @@
-package com.example.sauravrp.pizzame.models;
+package com.example.sauravrp.pizzame.models.network;
 
 import com.google.gson.annotations.SerializedName;
 

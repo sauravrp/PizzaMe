@@ -1,31 +1,36 @@
 package com.example.sauravrp.pizzame.datamodels;
 
-import com.example.sauravrp.pizzame.models.Result;
+import com.example.sauravrp.pizzame.datamodels.interfaces.IDataModel;
+import com.example.sauravrp.pizzame.helpers.interfaces.ISchedulerProvider;
+import com.example.sauravrp.pizzame.models.network.Result;
 import com.example.sauravrp.pizzame.network.YahooAPI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import javax.inject.Singleton;
 
-public class YahooDataService implements IDataModel {
+import io.reactivex.Single;
+
+@Singleton
+public class DataRepo implements IDataModel {
 
     private final static int FETCH_SIZE = 15;
 
     YahooAPI yahooAPI;
+    ISchedulerProvider schedulerProvider;
 
-    public YahooDataService(YahooAPI yahooAPI) {
+    public DataRepo(YahooAPI yahooAPI, ISchedulerProvider aSchedulerProvider) {
         this.yahooAPI = yahooAPI;
+        this.schedulerProvider = aSchedulerProvider;
     }
 
     @Override
-    public Observable<List<Result>> getPizzaListings(int offset) {
+    public Single<List<Result>> getPizzaListings(int offset) {
         String query = String.format("select * from local.search(%d,%d) where zip='78759' and query='pizza'", offset, FETCH_SIZE);
         return yahooAPI.getQueryResults(query, "json", true, "")
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
                 .flatMap(resultQuery -> {
                     ArrayList<Result> results;
                             if (resultQuery != null
@@ -36,7 +41,7 @@ public class YahooDataService implements IDataModel {
                             } else {
                                 results = new ArrayList<>();
                             }
-                    return Observable.just(results);
+                    return Single.just(results);
                         }
                 );
     }

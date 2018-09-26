@@ -1,6 +1,6 @@
 package di.modules.views;
 
-import com.example.sauravrp.pizzame.datamodels.IDataModel;
+import com.example.sauravrp.pizzame.datamodels.interfaces.IDataModel;
 import com.example.sauravrp.pizzame.viewmodels.PizzaMeViewModel;
 
 import dagger.Module;

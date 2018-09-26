@@ -9,6 +9,7 @@ buildscript {
     ext.gson = '2.8.5'
     ext.stetho = '1.5.0'
     ext.butterknife = '8.8.1'
+    ext.lifecycle_version = "1.1.0"
     repositories {
         google()
         jcenter()
