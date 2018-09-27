@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.sauravrp.pizzame.viewmodels.ListingDetailViewModel" />
+            type="com.example.sauravrp.listings.viewmodels.ListingDetailViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout

@@ -4,10 +4,10 @@
     <data>
         <variable
             name="uiModel"
-            type="com.example.sauravrp.pizzame.views.models.ListingsUiModel" />
+            type="com.example.sauravrp.listings.views.models.ListingsUiModel" />
         <variable
             name="viewModel"
-            type="com.example.sauravrp.pizzame.viewmodels.ListingsViewModel"/>
+            type="com.example.sauravrp.listings.viewmodels.ListingsViewModel"/>
     </data>
 
     <LinearLayout
