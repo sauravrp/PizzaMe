@@ -3,6 +3,8 @@ package com.example.sauravrp.listings.viewmodels;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.location.Location;
+import android.util.Pair;
 
 import com.example.sauravrp.listings.network.models.Listing;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
@@ -19,7 +21,9 @@ public class ListingsViewModel extends ViewModel {
 
     private IDataModel dataModel;
 
-    private final PublishSubject<Integer> resultsSubject = PublishSubject.create();
+    private Location location;
+
+    private final PublishSubject<Pair<Location, Integer>> resultsSubject = PublishSubject.create();
     private final MutableLiveData<ListingsUiModel> resultSelected = new MutableLiveData<>();
 
     public ListingsViewModel(IDataModel dataModel) {
@@ -28,7 +32,9 @@ public class ListingsViewModel extends ViewModel {
 
     public Observable<List<ListingsUiModel>> getListings() {
         return resultsSubject
-                .flatMap(offset -> dataModel.getListings(offset).toObservable())
+                .flatMap(pair -> dataModel.getListings(pair.first.getLatitude(),
+                        pair.first.getLongitude(),
+                        pair.second).toObservable())
                 .flatMap(list -> Observable.just(createUiModel(list)));
     }
 
@@ -37,11 +43,20 @@ public class ListingsViewModel extends ViewModel {
     }
 
 
-    public void getMoreListings(final int offset) {
-        resultsSubject.onNext(offset);
+    public void getMoreListings(final Location location, final int offset) {
+        if(location != null) {
+            this.location = location;
+            resultsSubject.onNext(Pair.create(location, offset));
+        }
     }
 
-    public void selectListing(ListingsUiModel resultUiModel) {
+    public void getMoreListings(final int offset) {
+        if(location != null) {
+            resultsSubject.onNext(Pair.create(location, offset));
+        }
+    }
+
+    public void selectListing(final ListingsUiModel resultUiModel) {
         resultSelected.setValue(resultUiModel);
     }
 

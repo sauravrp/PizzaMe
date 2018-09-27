@@ -39,4 +39,13 @@ public class ListingsAddressUiModel implements Serializable {
     public void setState(String state) {
         this.state = state;
     }
+
+    @Override
+    public String toString() {
+        return "ListingsAddressUiModel{" +
+                "street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                '}';
+    }
 }

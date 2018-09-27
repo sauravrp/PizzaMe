@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.example.sauravrp.listings.viewmodels.ListingDetailViewModel" />
@@ -85,27 +86,26 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
 
+                <ImageView
+                    android:id="@+id/directionIcon"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@android:drawable/ic_menu_directions" />
+
                 <TextView
                     android:id="@+id/street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/directionIcon"
-                    android:text="@{@string/address_spec(viewModel.selection.address.street, viewModel.selection.address.city, viewModel.selection.address.state)}"
+                    android:text="@{viewModel.selection.address.street != null ? @string/address_spec(viewModel.selection.address.street, viewModel.selection.address.city, viewModel.selection.address.state) : @string/no_address_found}"
                     android:textSize="16sp"
                     tools:text="10225 Research Blvd, Ste 110, Austin TX" />
-
-                <ImageView
-                    android:id="@+id/directionIcon"
-                    android:scaleType="centerCrop"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:src="@android:drawable/ic_menu_directions" />
-
 
             </RelativeLayout>
 

@@ -26,13 +26,13 @@ public class DataRepo implements IDataModel {
     }
 
     @Override
-    public Single<List<Listing>> getListings(int offset) {
-        String query = String.format("select * from local.search(%d,%d) where zip='78759' and query='pizza'", offset, FETCH_SIZE);
+    public Single<List<Listing>> getListings(double latitude, double longitude, int offset) {
+        String query = String.format("select * from local.search(%d,%d) where latitude='%f' and longitude='%f' and query='pizza'", offset, FETCH_SIZE, latitude, longitude);
         return yahooAPI.getQueryResults(query, "json", true, "")
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .flatMap(resultQuery -> {
-                    ArrayList<Listing> results;
+                            ArrayList<Listing> results;
                             if (resultQuery != null
                                     && resultQuery.getQueryInfo() != null
                                     && resultQuery.getQueryInfo().getResults() != null
@@ -41,7 +41,7 @@ public class DataRepo implements IDataModel {
                             } else {
                                 results = new ArrayList<>();
                             }
-                    return Single.just(results);
+                            return Single.just(results);
                         }
                 );
     }

@@ -62,4 +62,15 @@ public class ListingsUiModel implements Serializable {
     public void setAddress(ListingsAddressUiModel address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "ListingsUiModel{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", address=" + address +
+                ", phone='" + phone + '\'' +
+                ", distance='" + distance + '\'' +
+                '}';
+    }
 }

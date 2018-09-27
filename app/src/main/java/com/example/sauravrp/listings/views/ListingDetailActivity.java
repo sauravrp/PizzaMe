@@ -39,7 +39,7 @@ public class ListingDetailActivity extends AppCompatActivity {
         viewModel.setSelection(getSelectionFromBundle());
         binding.setVariable(BR.viewModel, viewModel);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         viewModel.getSelectedAddress().observe(this, listingsUiModel -> gotoAddress(listingsUiModel));

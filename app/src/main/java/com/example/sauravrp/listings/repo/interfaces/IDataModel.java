@@ -7,6 +7,5 @@ import java.util.List;
 import io.reactivex.Single;
 
 public interface IDataModel {
-
-    Single<List<Listing>> getListings(int offset);
+    Single<List<Listing>> getListings(double latitude, double longitude, int offset);
 }

@@ -26,7 +26,7 @@ public class ListingsViewModelTest {
     private ImmediateSchedulerProvider immediateSchedulerProvider;
 
     @Before
-    public void setup() throws Exception {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
         listingsViewModel = new ListingsViewModel(dataModel);
         immediateSchedulerProvider = new ImmediateSchedulerProvider();
