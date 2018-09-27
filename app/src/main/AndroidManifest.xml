@@ -28,6 +28,7 @@
         <activity
             android:name=".views.ListingDetailActivity"
             android:label="@string/title_activity_listing_detail"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

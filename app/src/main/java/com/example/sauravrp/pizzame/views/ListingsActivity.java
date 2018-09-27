@@ -2,11 +2,13 @@ package com.example.sauravrp.pizzame.views;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -78,6 +80,8 @@ public class ListingsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setupRecyclerView();
+        
+        listingsViewModel.getSelectedListing().observe(this, listingsUiModel -> resultSelected(listingsUiModel));
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -145,7 +149,7 @@ public class ListingsActivity extends AppCompatActivity {
         mIsLocationPreferredDialogVisible = true;
 
         if (mLocationPreferredDialog == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppTheme_PopupOverlay);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
             mLocationPreferredDialog = builder.setMessage(R.string.message_enable_location_services_body_long)
                      .setCancelable(true)
@@ -227,8 +231,6 @@ public class ListingsActivity extends AppCompatActivity {
         compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(listingsViewModel.getListings()
                 .subscribe(this::showResults, this::showError));
-        compositeDisposable.add(listingsViewModel.getSelectedListing()
-                .subscribe(this::resultSelected));
     }
 
     private void unBind() {

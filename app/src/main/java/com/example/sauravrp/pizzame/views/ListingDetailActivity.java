@@ -6,21 +6,15 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.example.sauravrp.pizzame.BR;
 import com.example.sauravrp.pizzame.R;
 import com.example.sauravrp.pizzame.helpers.IntentHelper;
 import com.example.sauravrp.pizzame.viewmodels.ListingDetailViewModel;
-import com.example.sauravrp.pizzame.views.models.ListingsAddressUiModel;
 import com.example.sauravrp.pizzame.views.models.ListingsUiModel;
-
-import io.reactivex.disposables.CompositeDisposable;
 
 public class ListingDetailActivity extends AppCompatActivity {
 
@@ -33,7 +27,6 @@ public class ListingDetailActivity extends AppCompatActivity {
     }
 
     private ListingDetailViewModel viewModel;
-    private CompositeDisposable compositeDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,50 +36,20 @@ public class ListingDetailActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         viewModel = ViewModelProviders.of(this).get(ListingDetailViewModel.class);
-        binding.setVariable(BR.uiModel, getSelectionFromBundle());
+        viewModel.setSelection(getSelectionFromBundle());
         binding.setVariable(BR.viewModel, viewModel);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        viewModel.getSelectedAddress().observe(this, listingsUiModel -> gotoAddress(listingsUiModel));
+        viewModel.getSelectedPhoneNumber().observe(this, phoneNum -> callPhoneNumber(phoneNum));
     }
 
     private ListingsUiModel getSelectionFromBundle() {
         Bundle extras = getIntent().getExtras();
         ListingsUiModel selection = (ListingsUiModel) extras.getSerializable(SELECTION);
         return selection;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bind();
-    }
-
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unBind();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
-    private void bind() {
-        compositeDisposable = new CompositeDisposable();
-        compositeDisposable.add(viewModel.getSelectedPhoneNumber()
-                .subscribe(this::callPhoneNumber));
-        compositeDisposable.add(viewModel.getSelectedAddress().subscribe(this::gotoAddress));
-    }
-
-    private void unBind() {
-        if(compositeDisposable != null) {
-            compositeDisposable.clear();
-        }
     }
 
     private void callPhoneNumber(String number) {

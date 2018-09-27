@@ -1,5 +1,9 @@
 package com.example.sauravrp.pizzame.viewmodels;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+
 import com.example.sauravrp.pizzame.network.models.Listing;
 import com.example.sauravrp.pizzame.repo.interfaces.IDataModel;
 import com.example.sauravrp.pizzame.views.models.ListingsUiModel;
@@ -11,12 +15,12 @@ import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
 
 
-public class ListingsViewModel {
+public class ListingsViewModel extends ViewModel {
 
     private IDataModel dataModel;
 
     private final PublishSubject<Integer> resultsSubject = PublishSubject.create();
-    private final PublishSubject<ListingsUiModel> resultSelected = PublishSubject.create();
+    private final MutableLiveData<ListingsUiModel> resultSelected = new MutableLiveData<>();
 
     public ListingsViewModel(IDataModel dataModel) {
         this.dataModel = dataModel;
@@ -28,7 +32,7 @@ public class ListingsViewModel {
                 .flatMap(list -> Observable.just(createUiModel(list)));
     }
 
-    public Observable<ListingsUiModel> getSelectedListing() {
+    public LiveData<ListingsUiModel> getSelectedListing() {
         return resultSelected;
     }
 
@@ -38,7 +42,7 @@ public class ListingsViewModel {
     }
 
     public void selectListing(ListingsUiModel resultUiModel) {
-        resultSelected.onNext(resultUiModel);
+        resultSelected.setValue(resultUiModel);
     }
 
     private List<ListingsUiModel> createUiModel(List<Listing> results) {
