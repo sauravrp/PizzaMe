@@ -82,7 +82,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.gotoAddress(viewModel.selection)}"
+                android:onClick="@{() -> viewModel.addressSelected(viewModel.selection)}"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
 
@@ -126,7 +126,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> viewModel.callPhoneNumber(viewModel.selection.phone)}"
+                android:onClick="@{() -> viewModel.phoneNumberSelected(viewModel.selection.phone)}"
                 android:orientation="horizontal"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">

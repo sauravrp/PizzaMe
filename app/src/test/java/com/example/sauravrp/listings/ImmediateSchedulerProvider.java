@@ -8,16 +8,16 @@ import io.reactivex.schedulers.Schedulers;
 public class ImmediateSchedulerProvider implements ISchedulerProvider {
     @Override
     public Scheduler computation() {
-        return Schedulers.single();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler io() {
-        return Schedulers.single();
+        return Schedulers.trampoline();
     }
 
     @Override
     public Scheduler ui() {
-        return Schedulers.single();
+        return Schedulers.trampoline();
     }
 }

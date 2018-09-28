@@ -1,6 +1,7 @@
 package com.example.sauravrp.listings.views.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class ListingsUiModel implements Serializable {
 
@@ -61,6 +62,24 @@ public class ListingsUiModel implements Serializable {
 
     public void setAddress(ListingsAddressUiModel address) {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ListingsUiModel that = (ListingsUiModel) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(phone, that.phone) &&
+                Objects.equals(distance, that.distance);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, title, address, phone, distance);
     }
 
     @Override

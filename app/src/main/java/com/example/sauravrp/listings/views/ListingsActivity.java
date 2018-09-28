@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.sauravrp.listings.R;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
+import com.example.sauravrp.listings.viewmodels.models.Location;
 import com.example.sauravrp.listings.views.adapters.ListingsAdapter;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
 import com.example.sauravrp.listings.views.viewhelpers.EndlessRecyclerViewScrollListener;
@@ -70,7 +71,7 @@ public class ListingsActivity extends BaseLocationActivity {
             showNetworkProgress(true);
             showLocationProgress(false);
 
-            listingsViewModel.getMoreListings(location, 0);
+            listingsViewModel.getMoreListings(Location.createLocation(location), 0);
         });
     }
 

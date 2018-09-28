@@ -3,11 +3,11 @@ package com.example.sauravrp.listings.viewmodels;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
-import android.location.Location;
-import android.util.Pair;
+import android.support.v4.util.Pair;
 
 import com.example.sauravrp.listings.network.models.Listing;
 import com.example.sauravrp.listings.repo.interfaces.IDataModel;
+import com.example.sauravrp.listings.viewmodels.models.Location;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
 
 import java.util.ArrayList;
@@ -23,15 +23,15 @@ public class ListingsViewModel extends ViewModel {
 
     private Location location;
 
-    private final PublishSubject<Pair<Location, Integer>> resultsSubject = PublishSubject.create();
-    private final MutableLiveData<ListingsUiModel> resultSelected = new MutableLiveData<>();
+    private final PublishSubject<Pair<Location, Integer>> listingsSubject = PublishSubject.create();
+    private final MutableLiveData<ListingsUiModel> listingSelected = new MutableLiveData<>();
 
     public ListingsViewModel(IDataModel dataModel) {
         this.dataModel = dataModel;
     }
 
     public Observable<List<ListingsUiModel>> getListings() {
-        return resultsSubject
+        return listingsSubject
                 .flatMap(pair -> dataModel.getListings(pair.first.getLatitude(),
                         pair.first.getLongitude(),
                         pair.second).toObservable())
@@ -39,25 +39,25 @@ public class ListingsViewModel extends ViewModel {
     }
 
     public LiveData<ListingsUiModel> getSelectedListing() {
-        return resultSelected;
+        return listingSelected;
     }
 
 
     public void getMoreListings(final Location location, final int offset) {
         if(location != null) {
             this.location = location;
-            resultsSubject.onNext(Pair.create(location, offset));
+            listingsSubject.onNext(Pair.create(location, offset));
         }
     }
 
     public void getMoreListings(final int offset) {
         if(location != null) {
-            resultsSubject.onNext(Pair.create(location, offset));
+            listingsSubject.onNext(Pair.create(location, offset));
         }
     }
 
     public void selectListing(final ListingsUiModel resultUiModel) {
-        resultSelected.setValue(resultUiModel);
+        listingSelected.setValue(resultUiModel);
     }
 
     private List<ListingsUiModel> createUiModel(List<Listing> results) {

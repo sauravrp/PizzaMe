@@ -14,11 +14,11 @@ public class ListingDetailViewModel extends ViewModel {
 
     private final MutableLiveData<ListingsUiModel> addressSelected = new MutableLiveData<>();
 
-    public void callPhoneNumber(String number) {
+    public void phoneNumberSelected(String number) {
         phoneNumberSelected.setValue(number);
     }
 
-    public void gotoAddress(ListingsUiModel address) {
+    public void addressSelected(ListingsUiModel address) {
         addressSelected.setValue(address);
     }
 
@@ -30,11 +30,11 @@ public class ListingDetailViewModel extends ViewModel {
         return addressSelected;
     }
 
-    public ListingsUiModel getSelection() {
-        return selection;
-    }
-
     public void setSelection(ListingsUiModel selection) {
         this.selection = selection;
+    }
+
+    public ListingsUiModel getSelection() {
+        return selection;
     }
 }
