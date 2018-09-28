@@ -34,3 +34,8 @@ There are many room for improvements.
 - Current test cases focuses on the view model classes. More test cases could be utilized such as Espresso tests and other instrumentation tests.
 - Splash screen can be added.
 - UI can use more polishing
+
+# Screenshot
+![alt text](https://github.com/sauravrp/PizzaMe/blob/master/screenshots/pizzame.gif)
+
+
