@@ -67,9 +67,9 @@ public class ListingsActivity extends BaseLocationActivity {
         showLocationProgress(true);
         getLocationListener().getLocation().observe(this, location -> {
             // this won't fire, until onStart is complete, location listener is lifecycle aware
+            showErrorText(false);
             showLocationProgress(false);
             showNetworkProgress(true);
-            showLocationProgress(false);
 
             listingsViewModel.getMoreListings(Location.createLocation(location), 0);
         });

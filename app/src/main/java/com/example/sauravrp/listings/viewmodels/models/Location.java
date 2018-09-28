@@ -11,7 +11,7 @@ public class Location {
     }
 
     public static Location createLocation(android.location.Location aLocation) {
-        return new Location(aLocation.getLatitude(), aLocation.getLatitude());
+        return new Location(aLocation.getLatitude(), aLocation.getLongitude());
     }
 
     public double getLatitude() {

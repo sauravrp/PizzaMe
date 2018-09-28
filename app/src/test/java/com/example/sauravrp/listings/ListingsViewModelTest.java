@@ -4,8 +4,8 @@ package com.example.sauravrp.listings;
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.lifecycle.Observer;
 
-import com.example.sauravrp.listings.repo.interfaces.IDataModel;
 import com.example.sauravrp.listings.network.models.Listing;
+import com.example.sauravrp.listings.repo.interfaces.IDataModel;
 import com.example.sauravrp.listings.viewmodels.ListingsViewModel;
 import com.example.sauravrp.listings.viewmodels.models.Location;
 import com.example.sauravrp.listings.views.models.ListingsUiModel;
@@ -23,19 +23,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-import io.reactivex.functions.Function;
-
-import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.plugins.RxAndroidPlugins;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.observers.TestObserver;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
@@ -48,8 +42,6 @@ public class ListingsViewModelTest {
     Observer<ListingsUiModel> listingObserver;
 
     private ListingsViewModel listingsViewModel;
-
-    private ImmediateSchedulerProvider immediateSchedulerProvider;
 
     @Rule
     public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
@@ -77,7 +69,6 @@ public class ListingsViewModelTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         listingsViewModel = new ListingsViewModel(dataModel);
-        immediateSchedulerProvider = new ImmediateSchedulerProvider();
     }
 
 
