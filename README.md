@@ -31,4 +31,4 @@ Android Technology to be used
 There are many room for improvements. 
 - If the emulator is started with a clean slate and the user is prompted for google play update, the app freezes in Getting Location state. This can be remedied by restarting the app.
 - If the user is in lat lon that doesn't return any results, the user sees the loading state. This can be handled by showing a proper error message upon detecting that no results was returned on the first call to the server.
-- More test cases could be utilized.
+- Current test cases focuses on the view model classes. More test cases could be utilized such as Espresso tests and other instrumentation tests.
