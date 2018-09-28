@@ -42,14 +42,13 @@ public class ListingDetailActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        viewModel.getSelectedAddress().observe(this, listingsUiModel -> gotoAddress(listingsUiModel));
-        viewModel.getSelectedPhoneNumber().observe(this, phoneNum -> callPhoneNumber(phoneNum));
+        viewModel.getSelectedAddress().observe(this, this::gotoAddress);
+        viewModel.getSelectedPhoneNumber().observe(this, this::callPhoneNumber);
     }
 
     private ListingsUiModel getSelectionFromBundle() {
         Bundle extras = getIntent().getExtras();
-        ListingsUiModel selection = (ListingsUiModel) extras.getSerializable(SELECTION);
-        return selection;
+        return (ListingsUiModel) extras.getSerializable(SELECTION);
     }
 
     private void callPhoneNumber(String number) {

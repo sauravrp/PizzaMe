@@ -91,7 +91,6 @@ public abstract class BaseLocationActivity extends AppCompatActivity {
                         showLocationPreferredDialog();
                     }
                 }
-                return;
             }
 
             // other 'case' lines to check for other
@@ -99,7 +98,7 @@ public abstract class BaseLocationActivity extends AppCompatActivity {
         }
     }
 
-    public LocationListener getLocationListener() {
+    protected LocationListener getLocationListener() {
         return locationListener;
     }
 

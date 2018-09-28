@@ -17,8 +17,8 @@ public class DataRepo implements IDataModel {
 
     private final static int FETCH_SIZE = 15;
 
-    YahooAPI yahooAPI;
-    ISchedulerProvider schedulerProvider;
+    private final YahooAPI yahooAPI;
+    private final ISchedulerProvider schedulerProvider;
 
     public DataRepo(YahooAPI yahooAPI, ISchedulerProvider aSchedulerProvider) {
         this.yahooAPI = yahooAPI;

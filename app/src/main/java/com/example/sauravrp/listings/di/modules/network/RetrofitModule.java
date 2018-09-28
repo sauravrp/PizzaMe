@@ -15,7 +15,7 @@ public class RetrofitModule {
 
     private static String BASE_URL = "https://query.yahooapis.com/v1/public/";
 
-    Retrofit retrofit;
+    private Retrofit retrofit;
 
     @Provides Retrofit providesRetrofit() {
 

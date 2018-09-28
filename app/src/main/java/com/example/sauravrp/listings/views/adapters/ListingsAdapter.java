@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.ViewHolder> {
 
-    private List<ListingsUiModel> data;
+    private final List<ListingsUiModel> data;
     private final ListingsViewModel viewModel;
 
     public ListingsAdapter(ListingsViewModel dataModel, List<ListingsUiModel> aData) {
@@ -49,12 +49,12 @@ public class ListingsAdapter extends RecyclerView.Adapter<ListingsAdapter.ViewHo
 
        private final ViewDataBinding binding;
 
-        public ViewHolder(ViewDataBinding binding) {
+        ViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void bind(ListingsUiModel item) {
+        void bind(ListingsUiModel item) {
             binding.setVariable(BR.uiModel, item);
             binding.executePendingBindings();
         }

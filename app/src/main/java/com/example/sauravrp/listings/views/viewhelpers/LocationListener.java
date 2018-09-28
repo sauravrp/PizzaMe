@@ -21,14 +21,14 @@ public class LocationListener implements LifecycleObserver {
     private boolean enabled = false;
 
     private static final String TAG = "LocationListener";
-    Context context;
-    Lifecycle lifecycle;
+    private final Context context;
+    private final Lifecycle lifecycle;
 
-    private FusedLocationProviderClient fusedLocationClient;
-    private LocationCallback locationCallback;
+    private final FusedLocationProviderClient fusedLocationClient;
+    private final LocationCallback locationCallback;
     private LocationRequest locationRequest;
 
-    private MutableLiveData<Location> location = new MutableLiveData<>();
+    private final MutableLiveData<Location> location = new MutableLiveData<>();
 
     public LocationListener(Context aContext, Lifecycle aLifecycle) {
         context = aContext;
@@ -48,10 +48,9 @@ public class LocationListener implements LifecycleObserver {
                     Log.d(TAG, "location result on callback is null");
                 }
 
-                Location loc = locationResult.getLastLocation();
-                location.setValue(loc);
-
-                Log.d(TAG, "onLocationResult callback result " + loc.toString());
+                if(locationResult.getLastLocation() != null) {
+                    location.setValue(locationResult.getLastLocation());
+                }
 
             }
         };

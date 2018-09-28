@@ -9,7 +9,7 @@ import retrofit2.Retrofit;
 @Module
 public class YahooAPIModule {
 
-    YahooAPI yahooAPI;
+    private YahooAPI yahooAPI;
 
     @Provides
     YahooAPI providesYahooAPI(Retrofit retrofit) {

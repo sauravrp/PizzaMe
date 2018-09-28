@@ -27,7 +27,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public class ListingsActivity extends BaseLocationActivity {
 
-    private final String TAG = "ListingsActivity";
+    private final static String TAG = "ListingsActivity";
 
     @Inject
     ListingsViewModel listingsViewModel;
@@ -47,8 +47,7 @@ public class ListingsActivity extends BaseLocationActivity {
     private CompositeDisposable compositeDisposable;
 
     private ListingsAdapter listingsAdapter;
-    private ArrayList<ListingsUiModel> placesList = new ArrayList<>();
-    private EndlessRecyclerViewScrollListener endlessScrollListener;
+    private final ArrayList<ListingsUiModel> placesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public class ListingsActivity extends BaseLocationActivity {
         setSupportActionBar(toolbar);
         setupRecyclerView();
 
-        listingsViewModel.getSelectedListing().observe(this, listingsUiModel -> resultSelected(listingsUiModel));
+        listingsViewModel.getSelectedListing().observe(this, this::resultSelected);
 
         showErrorText(false);
         showPlacesListView(false);
@@ -104,7 +103,7 @@ public class ListingsActivity extends BaseLocationActivity {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         listingsAdapter = new ListingsAdapter(listingsViewModel, placesList);
 
-        endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+        EndlessRecyclerViewScrollListener endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
 

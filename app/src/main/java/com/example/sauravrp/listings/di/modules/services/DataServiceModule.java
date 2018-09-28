@@ -11,7 +11,7 @@ import dagger.Provides;
 @Module
 public class DataServiceModule {
 
-    DataRepo yahooDataService;
+    private DataRepo yahooDataService;
 
     @Provides
     IDataModel providesDataModel(YahooAPI yahooAPI, ISchedulerProvider schedulerProvider) {

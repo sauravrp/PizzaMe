@@ -47,7 +47,7 @@ public class ListingsViewModelTest {
         ArrayList<Listing> results = new ArrayList();
         results.add(listing);
 
-        Mockito.when(dataModel.getListings(0)).thenReturn(Single.just(results));
+        Mockito.when(dataModel.getListings(,0, 0)).thenReturn(Single.just(results));
 
 
 //        TestObserver<List<Listing>> testObserver = listingsViewModel.getListings()
